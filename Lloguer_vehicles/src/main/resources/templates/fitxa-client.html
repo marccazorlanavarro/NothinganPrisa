@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ca" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1e2a5e">
+
+    <title>Fitxa de client · Nothingan Pri S.A.</title>
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+
+
+<div th:replace="~{fragments/office :: topbar}"></div>
+
+<div class="app">
+    <input type="checkbox" id="side" class="side-toggle" aria-label="Menú de gestió">
+    <div th:replace="~{fragments/office :: sidebar(activeMenu='clients')}"></div>
+    <label class="scrim" for="side" aria-label="Tancar el menú"></label>
+
+    <main class="main">
+
+        <!-- CAPÇALERA -->
+        <div class="page-head">
+
+            <h1>Fitxa de client</h1>
+
+            <p>
+                DNI:
+                <span th:text="${client.DNI}">DNI del client</span>
+            </p>
+
+            <!-- ESTAT DEL CLIENT -->
+            <p>
+                Estat:
+                <span th:if="${client.activo}">Actiu</span>
+                <span th:unless="${client.activo}">Desactivat</span>
+            </p>
+
+        </div>
+
+        <!-- MISSATGES DE RESULTAT -->
+        <div th:if="${error}"
+             class="alert alert-danger"
+             role="alert"
+             th:text="${error}">
+        </div>
+
+        <div th:if="${success}"
+             class="alert alert-success"
+             role="status"
+             th:text="${success}">
+        </div>
+
+        <div class="split">
+
+            <!-- DADES DEL CLIENT -->
+            <section class="card stack-gap">
+
+                <div>
+
+                    <h2>Dades del client</h2>
+
+                    <dl class="dl-grid">
+
+                        <div>
+                            <dt>DNI</dt>
+                            <dd th:text="${client.DNI}">DNI</dd>
+                        </div>
+
+                        <div>
+                            <dt>Caducitat DNI</dt>
+                            <dd th:text="${client.cadDNI}">
+                                Caducitat DNI
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt>Llicència de conduir</dt>
+                            <dd th:text="${client.Lliconduir}">
+                                Llicència de conduir
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt>Caducitat de la llicència</dt>
+                            <dd th:text="${client.cdLLiconduir}">
+                                Caducitat llicència
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt>Adreça</dt>
+                            <dd th:text="${client.adreca}">
+                                Adreça
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt>Nacionalitat</dt>
+                            <dd th:text="${client.nacionalitat}">
+                                Nacionalitat
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt>Número de targeta de crèdit</dt>
+                            <dd>••••••••••••</dd>
+                        </div>
+
+                    </dl>
+
+                </div>
+
+                <!-- DOCUMENTS -->
+                <div>
+
+                    <h3 class="mb">Documents</h3>
+
+                    <div class="split-eq">
+
+                        <!-- DOCUMENT D'IDENTITAT -->
+                        <div>
+
+                            <p class="mb">
+                                Document d'identitat
+                            </p>
+
+                            <!-- IMATGE DNI -->
+                            <img th:if="${client.fotoDniAnverso != null
+                                         and client.fotoDniAnversoTipus != 'application/pdf'}"
+                                 th:src="@{/clients/{dni}/document/dni(dni=${client.DNI})}"
+                                 alt="Document d'identitat"
+                                 style="width:100%; max-width:350px; border-radius:10px;">
+
+                            <!-- PDF DNI -->
+                            <iframe th:if="${client.fotoDniAnverso != null
+                                            and client.fotoDniAnversoTipus == 'application/pdf'}"
+                                    th:src="@{/clients/{dni}/document/dni(dni=${client.DNI})}"
+                                    title="Document d'identitat PDF"
+                                    style="width:100%; height:400px; border:0; border-radius:10px;">
+                            </iframe>
+
+                            <!-- SENSE DNI -->
+                            <p th:if="${client.fotoDniAnverso == null}">
+                                No hi ha cap document d'identitat pujat.
+                            </p>
+
+                        </div>
+
+                        <!-- PERMÍS DE CONDUIR -->
+                        <div>
+
+                            <p class="mb">
+                                Llicència de conduir
+                            </p>
+
+                            <!-- IMATGE PERMÍS -->
+                            <img th:if="${client.fotoPermiso != null
+                                         and client.fotoPermisoTipus != 'application/pdf'}"
+                                 th:src="@{/clients/{dni}/document/llicencia(dni=${client.DNI})}"
+                                 alt="Permís de conduir"
+                                 style="width:100%; max-width:350px; border-radius:10px;">
+
+                            <!-- PDF PERMÍS -->
+                            <iframe th:if="${client.fotoPermiso != null
+                                            and client.fotoPermisoTipus == 'application/pdf'}"
+                                    th:src="@{/clients/{dni}/document/llicencia(dni=${client.DNI})}"
+                                    title="Permís de conduir PDF"
+                                    style="width:100%; height:400px; border:0; border-radius:10px;">
+                            </iframe>
+
+                            <!-- SENSE PERMÍS -->
+                            <p th:if="${client.fotoPermiso == null}">
+                                No hi ha cap permís de conduir pujat.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- INFORMACIÓ DE CONTACTE -->
+            <section class="card">
+
+                <h2>Informació de contacte</h2>
+
+                <dl class="dl-grid">
+
+                    <div>
+                        <dt>Nom</dt>
+                        <dd th:text="${client.nom} + ' ' + ${client.cognoms}">
+                            Nom
+                        </dd>
+                    </div>
+
+                    <div>
+                        <dt>Telèfon</dt>
+                        <dd th:text="${client.telefon}">
+                            Telèfon
+                        </dd>
+                    </div>
+
+                    <div>
+                        <dt>Correu electrònic</dt>
+                        <dd th:text="${client.email}">
+                        </dd>
+                    </div>
+
+                </dl>
+
+            </section>
+
+        </div>
+
+        <!-- BOTONS -->
+        <div class="btn-row">
+
+            <a class="btn" th:href="@{/agent/clients}">
+                Tornar al llistat de clients
+            </a>
+
+            <!-- DESACTIVAR CLIENT ACTIU -->
+            <form th:if="${client.activo}"
+                  th:action="@{/clients/desactivar/{id}(id=${client.id})}"
+                  method="post"
+                  onsubmit="return confirm('Segur que vols desactivar aquest client?');">
+
+                <button type="submit" class="btn btn-danger">
+                    Desactivar client
+                </button>
+
+            </form>
+
+            <!-- ACTIVAR CLIENT DESACTIVAT -->
+            <form th:unless="${client.activo}"
+                  th:action="@{/clients/activar/{id}(id=${client.id})}"
+                  method="post"
+                  onsubmit="return confirm('Segur que vols activar aquest client?');">
+
+                <button type="submit" class="btn btn-ok">
+                    Activar client
+                </button>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
