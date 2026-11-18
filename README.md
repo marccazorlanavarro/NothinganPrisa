@@ -39,8 +39,3 @@ L'aplicació implementa autenticació segura amb contrasenyes xifrades mitjança
 
 ---
 
-## 🚀 Instal·lació i Posada en Marxa
-
-1. **Clonar el repositori:**
-   ```bash
-   git clone <URL_DEL_REPOSITORI>
