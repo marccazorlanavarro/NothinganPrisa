@@ -1,4 +1,4 @@
-![Banner Corporatiu Nothingan Pri S.A.](banner.png.jpg)
+![Banner Corporatiu Nothingan Pri S.A.](banner.png.jpeg)
 
 # 🚗 Nothingan Pri S.A. — Sistema de Gestió de Lloguer de Vehicles
 
