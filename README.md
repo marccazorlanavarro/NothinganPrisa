@@ -1,5 +1,6 @@
-![Banner Corporatiu Nothingan Pri S.A.](banner.png.jpeg)
-
+<div class="banner-container text-center my-4">
+    <img src="/images/Banner.png.jpeg" alt="Banner Nothingan Pri S.A." class="img-fluid rounded shadow" style="max-width: 100%; height: auto;">
+</div>
 # 🚗 Nothingan Pri S.A. — Sistema de Gestió de Lloguer de Vehicles
 
 Aplicació web corporativa de tipus **ERP i CRM** desenvolupada per a **Nothingan Pri S.A.**, dissenyada per centralitzar i digitalitzar la gestió integral de clients, flota de vehicles, reserves i facturació històrica.
