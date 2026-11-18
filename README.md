@@ -14,6 +14,9 @@ El sistema segueix el patró arquitectònic **MVC (Model-View-Controller)** sobr
 *   **Frontend:** Thymeleaf, HTML5, CSS3 i JavaScript.
 
 ---
+<div class="banner-container text-center my-4">
+    <img src="/images/banner.png.jpg" alt="Banner Nothingan Pri S.A." class="img-fluid rounded shadow" style="max-width: 100%; height: auto;">
+</div>
 
 ## 👥 Rols i Control d'Accés (Spring Security)
 
